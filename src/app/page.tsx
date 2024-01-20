@@ -12,16 +12,10 @@ import { useState } from 'react'
 
 export default function Home() {
   const { boards, updateBoards, createBoard } = useBoards();
-  const [showed, updateShowed] = useState(false)
-
-  function switchShowed() {
-    updateShowed(!showed)
-  }
 
   function addNewBoard(fields: IBoard) {
     createBoard(fields)
     updateBoards()
-    console.log(fields)
   }
 
   return (
@@ -31,7 +25,6 @@ export default function Home() {
       </header>
       <div className='flex justify-around w-full mt-8'>
         <p>My boards:</p>
-        <Button onClick={switchShowed}>Add new</Button>
       </div>
       <section className='max-w-full cards_container grid grid-flow-col auto-cols-max gap-4 overflow-x-scroll mt-8'>
         {boards?.map(board => (
@@ -42,11 +35,8 @@ export default function Home() {
             </Card>
           </Link>
         ))}
-        <CreationCard />
+        <CreationCard onSubmit={addNewBoard} />
       </section>
-
-      {showed ? <CreationPopup fallback={addNewBoard}></CreationPopup> : null}
-
     </main>
   )
 }
