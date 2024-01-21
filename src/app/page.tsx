@@ -28,7 +28,7 @@ export default function Home() {
       </div>
       <section className='max-w-full cards_container grid grid-flow-col auto-cols-max gap-4 overflow-x-scroll mt-8'>
         {boards?.map(board => (
-          <Link key={board.id} href={'/'}>
+          <Link key={board.id} href={'/boards/' + board.id}>
             <Card>
               <Image width={280} height={100} src={board.image} alt={'title'}></Image>
               <h3 className="mt-2 text-lg">{board.title}</h3>
