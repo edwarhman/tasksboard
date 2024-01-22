@@ -5,7 +5,6 @@ import { notFound } from "next/navigation"
 
 export default async function Page({ params }: { params: { id: string } }) {
     const board = await Boards.getById(params.id)
-    console.log(board)
 
     if (!board) {
         notFound()
@@ -16,23 +15,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <header>
                 <h1 className='font-bold text-3xl'>{board?.title}</h1>
             </header>
-            <Table>
-                {board?.columns ? (
-                    <>
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                        <Column className="min-w-[250px]" title={board.columns[0].title} items={board.columns[0].items} />
-                    </>
-                ) : null}
+            <Table items={board.columns}>
             </Table>
         </main>
     )

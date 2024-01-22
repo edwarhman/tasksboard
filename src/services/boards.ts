@@ -12,7 +12,18 @@ const boards: IBoard[] = [{
     image: 'https://expressjs.com/images/express-facebook-share.png',
     id: '1',
     columns: [{
+        id: 'asd',
         title: 'Columna 1',
+        items: [{
+            title: 'tarea 1',
+            description: 'Tengo que hacer la tarea'
+        }, {
+            title: 'Tarea 2',
+            description: 'Tengo más tarea'
+        }]
+    }, {
+        id: 'qwe',
+        title: 'Columna 2',
         items: [{
             title: 'tarea 1',
             description: 'Tengo que hacer la tarea'
