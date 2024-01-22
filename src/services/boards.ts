@@ -15,9 +15,11 @@ const boards: IBoard[] = [{
         id: 'asd',
         title: 'Columna 1',
         items: [{
+            id: 'xcv',
             title: 'tarea 1',
             description: 'Tengo que hacer la tarea'
         }, {
+            id: 'plk',
             title: 'Tarea 2',
             description: 'Tengo más tarea'
         }]
@@ -25,9 +27,11 @@ const boards: IBoard[] = [{
         id: 'qwe',
         title: 'Columna 2',
         items: [{
+            id: 'tui',
             title: 'tarea 1',
             description: 'Tengo que hacer la tarea'
         }, {
+            id: 'kvc',
             title: 'Tarea 2',
             description: 'Tengo más tarea'
         }]

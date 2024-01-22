@@ -1,27 +1,46 @@
 'use client'
-import { useSortable } from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities";
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable"
+import SortableItem from "./SortableItem";
+import { Card } from "./Card";
+import { useState } from "react";
 
-export default function Column({ id, title, items, className }: { id: string, title: string, items: any[], className?: string }) {
-    const {
-        attributes,
-        listeners,
-        setNodeRef,
-        transform,
-        transition
-    } = useSortable({ id })
-
-    const style = {
-        transform: CSS.Transform.toString(transform),
-        transition
-    }
+export default function Column({
+    title,
+    items,
+    className
+}: { title: string, items: any[], className?: string }) {
+    const [cards, setCards] = useState(items)
 
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={`bg-zinc-600 p-1 grid gap-1 rounded-md ${className}`}>
+        <div className={`bg-zinc-600 p-1 grid gap-1 rounded-md ${className}`}>
             <div>{title}</div>
-            {items.map((item) => (
-                <div className="bg-zinc-900 p-1 rounded-md" key={item.title}>{item.title}</div>
-            ))}
+            <DndContext onDragEnd={handleDragEnd} >
+                <SortableContext items={cards} strategy={verticalListSortingStrategy}>
+                    {cards.map((card) => (
+                        <SortableItem key={card.id} id={card.id}>
+                            <Card>{card.title}</Card>
+                        </SortableItem>
+                    ))}
+                </SortableContext>
+            </DndContext>
         </div>
     )
+
+    function handleDragEnd(event: any) {
+        const { active, over } = event
+
+        if (active.id !== over.id) {
+            setCards((prevItems: any) => {
+                const oldIndex = prevItems.findIndex((el: any) => (
+                    el.id === active.id
+                ))
+                const newIndex = prevItems.findIndex((el: any) => (
+                    el.id === over.id
+                ))
+
+                return arrayMove(prevItems, oldIndex, newIndex)
+            })
+        }
+    }
 }
