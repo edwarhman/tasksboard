@@ -3,7 +3,18 @@ export interface IBoard {
     image: string
     title: string
     creationDate: Date
-    columns?: any[]
+    columns?: IColumn[]
+}
+
+export interface IColumn {
+    id: string
+    title: string
+    items: IColumnItem[]
+}
+export interface IColumnItem {
+    id: string
+    title: string
+    description: string
 }
 
 const boards: IBoard[] = [{
@@ -13,26 +24,26 @@ const boards: IBoard[] = [{
     id: '1',
     columns: [{
         id: 'asd',
-        title: 'Columna 1',
+        title: 'Por hacer',
         items: [{
             id: 'xcv',
-            title: 'tarea 1',
+            title: 'sacar la basura',
             description: 'Tengo que hacer la tarea'
         }, {
             id: 'plk',
-            title: 'Tarea 2',
+            title: 'limpiar el cuarto',
             description: 'Tengo más tarea'
         }]
     }, {
         id: 'qwe',
-        title: 'Columna 2',
+        title: 'Tareas hechas',
         items: [{
             id: 'tui',
-            title: 'tarea 1',
+            title: 'comprar queso',
             description: 'Tengo que hacer la tarea'
         }, {
             id: 'kvc',
-            title: 'Tarea 2',
+            title: 'estudiar analisis',
             description: 'Tengo más tarea'
         }]
     }]
