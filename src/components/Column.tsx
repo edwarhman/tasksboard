@@ -2,7 +2,6 @@
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import SortableItem from "./SortableItem";
 import { Card } from "./Card";
-import { useState } from "react";
 
 export default function Column({
     title,

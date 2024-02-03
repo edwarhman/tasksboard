@@ -1,14 +1,11 @@
 'use client'
 
-import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { CreationCard } from '@/components/CreationCard'
-import { CreationPopup } from '@/components/CreationPopup'
 import useBoardManager from '@/hooks/useBoardManager'
 import { IBoard } from '@/services/boards'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
 
 export default function Home() {
   const { boards, updateBoards, createBoard } = useBoardManager();

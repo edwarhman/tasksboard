@@ -1,4 +1,3 @@
-import Column from "@/components/Column"
 import Table from "@/components/Table"
 import { Boards } from "@/services/boards"
 import { notFound } from "next/navigation"
