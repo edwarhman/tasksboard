@@ -1,7 +1,7 @@
 import { Boards, IBoard } from "@/services/boards"
 import { useEffect, useState } from "react"
 
-export function useBoards() {
+export default function useBoardManager() {
     const [boards, setBoards] = useState<IBoard[]>()
 
     useEffect(() => {
