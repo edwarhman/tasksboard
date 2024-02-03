@@ -10,7 +10,7 @@ import { Card } from "./Card"
 import { IColumn, IColumnItem } from "@/services/boards"
 
 interface Props {
-    items: IColumn[] | null
+    items: IColumn[]
 }
 
 interface ItemId {

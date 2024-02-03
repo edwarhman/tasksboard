@@ -3,7 +3,7 @@ export interface IBoard {
     image: string
     title: string
     creationDate: Date
-    columns?: IColumn[]
+    columns: IColumn[]
 }
 
 export interface IColumn {
@@ -51,12 +51,14 @@ const boards: IBoard[] = [{
     title: 'Tablero de prueba',
     creationDate: new Date(),
     image: 'https://expressjs.com/images/express-facebook-share.png',
-    id: '2'
+    id: '2',
+    columns: []
 }, {
     title: 'Esto es un título un poco más largo de lo normal',
     image: 'https://expressjs.com/images/express-facebook-share.png',
     creationDate: new Date(),
-    id: '3'
+    id: '3',
+    columns: []
 }]
 
 export class Boards {
@@ -70,7 +72,8 @@ export class Boards {
             id: creationDate.toISOString(),
             image: image ?? 'https://expressjs.com/images/express-facebook-share.png',
             title,
-            creationDate
+            creationDate,
+            columns: []
         }
 
         boards.push(board)
