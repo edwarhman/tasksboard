@@ -1,6 +1,6 @@
 'use client'
 
-import { DndContext, useSensor, useSensors } from "@dnd-kit/core"
+import { DndContext, UniqueIdentifier, useSensor, useSensors } from "@dnd-kit/core"
 import Column from "./Column"
 import { SortableContext, arrayMove, horizontalListSortingStrategy } from "@dnd-kit/sortable"
 import { DragOverlay } from '@dnd-kit/core'
@@ -39,7 +39,7 @@ export default function Table({ items }: Props) {
             onDragEnd={handleDragEnd}
             sensors={sensors}
         >
-            <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
+            <SortableContext items={columns as { id: UniqueIdentifier }[]} strategy={horizontalListSortingStrategy}>
                 <div className="flex overflow-x-scroll gap-3 w-full">
                     {columns ? columns.map((column: any) => (
                         <SortableItem key={column.id} id={column.id}>
