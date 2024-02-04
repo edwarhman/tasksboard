@@ -23,7 +23,7 @@ export default function Column({
 }: Props) {
     return (
         <div className={`bg-zinc-600 p-1 grid gap-1 rounded-md ${className}`}>
-            <div>{title}</div>
+            <div className="m-1 font-bold uppercase">{title}</div>
             <SortableContext items={items} strategy={verticalListSortingStrategy}>
                 {items.map((card) => (
                     <SortableItem key={card.id} id={card.id}>

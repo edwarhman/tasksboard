@@ -29,7 +29,7 @@ export default function Home() {
           <Link key={board.id} href={'/boards/' + board.id}>
             <Card>
               <Image width={280} height={100} src={board.image ?? dashboardImage} alt={'title'}></Image>
-              <h3 className="mt-2 text-lg">{board.title}</h3>
+              <h3 className="mt-2 text-lg font-bold">{board.title}</h3>
             </Card>
           </Link>
         ))}
