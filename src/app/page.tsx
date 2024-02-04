@@ -6,6 +6,7 @@ import useBoardManager from '@/hooks/useBoardManager'
 import { IBoard } from '@/services/boards'
 import Image from 'next/image'
 import Link from 'next/link'
+import dashboardImage from '../assets/taskboard.jpeg'
 
 export default function Home() {
   const { boards, updateBoards, createBoard } = useBoardManager();
@@ -27,12 +28,12 @@ export default function Home() {
         {boards?.map(board => (
           <Link key={board.id} href={'/boards/' + board.id}>
             <Card>
-              <Image width={280} height={100} src={board.image} alt={'title'}></Image>
+              <Image width={280} height={100} src={board.image ?? dashboardImage} alt={'title'}></Image>
               <h3 className="mt-2 text-lg">{board.title}</h3>
             </Card>
           </Link>
         ))}
-        <CreationCard onSubmit={addNewBoard} />
+        <CreationCard subject='table' onSubmit={addNewBoard} />
       </section>
     </main>
   )
