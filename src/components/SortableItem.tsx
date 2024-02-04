@@ -2,7 +2,12 @@
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities";
 
-export default function SortableItem({ id, children }: { id: string, children: any }) {
+interface Props {
+    id: string,
+    children?: any,
+    className?: string
+}
+export default function SortableItem({ id, children, className }: Props) {
     const {
         attributes,
         listeners,
@@ -17,7 +22,7 @@ export default function SortableItem({ id, children }: { id: string, children: a
     }
 
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={className}>
             {children}
         </div>
     )
