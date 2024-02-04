@@ -1,6 +1,6 @@
 'use client'
 
-import { DndContext } from "@dnd-kit/core"
+import { DndContext, useSensor, useSensors } from "@dnd-kit/core"
 import Column from "./Column"
 import { SortableContext, arrayMove, horizontalListSortingStrategy } from "@dnd-kit/sortable"
 import { DragOverlay } from '@dnd-kit/core'
@@ -8,6 +8,8 @@ import { useEffect, useState } from "react"
 import SortableItem from "./SortableItem"
 import { Card } from "./Card"
 import { IColumn, IColumnItem } from "@/services/boards"
+import { CreationCard } from "./CreationCard"
+import { MouseSensor, TouchSensor } from "@/services/fixedSensors"
 
 interface Props {
     items: IColumn[]
@@ -23,6 +25,10 @@ export default function Table({ items }: Props) {
     const [activeItem, setActiveItem] = useState<ItemId | null>()
     const [activeColumn, setActiveColumn] = useState<IColumn | null>()
 
+    const sensors = useSensors(
+        useSensor(MouseSensor),
+        useSensor(TouchSensor)
+    );
 
     useEffect(() => {
         console.log('al cambiar columnas', { columns })
@@ -34,12 +40,13 @@ export default function Table({ items }: Props) {
             onDragStart={handleItemDragStart}
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}
+            sensors={sensors}
         >
             <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
                 <div className="flex overflow-x-scroll gap-3 w-full">
                     {columns ? columns.map((column: any) => (
                         <SortableItem key={column.id} id={column.id}>
-                            <Column className="min-w-[250px]" key={column.id} title={column.title} items={column.items}>
+                            <Column className="min-w-[250px]" id={column.id} key={column.id} title={column.title} items={column.items} onCreateNewItem={handleNewItem}>
                             </Column>
                         </SortableItem>
                     )) : null}
@@ -52,11 +59,12 @@ export default function Table({ items }: Props) {
                                 : activeColumn
                                     ?
                                     <SortableItem id={activeColumn.id} >
-                                        <Column className="min-w-[250px]" title={activeColumn.title} items={activeColumn.items}></Column>
+                                        <Column className="min-w-[250px]" id="" title={activeColumn.title} items={activeColumn.items} onCreateNewItem={handleNewItem}></Column>
                                     </SortableItem>
                                     : null
                         }
                     </DragOverlay>
+                    <CreationCard className="max-h-40" onSubmit={handleNewColumn} subject="list" />
                 </div>
             </SortableContext>
         </DndContext >
@@ -232,6 +240,63 @@ export default function Table({ items }: Props) {
 
         setActiveItem(null)
         setActiveColumn(null)
+    }
+
+    function createNewColumn(title: string) {
+        const newColumn: IColumn = {
+            id: new Date().toString(),
+            title,
+            items: []
+        }
+
+        setColumns(prev => {
+            if (!prev) {
+                return prev
+            }
+
+            return [
+                ...prev,
+                newColumn
+            ]
+        })
+    }
+
+    function createNewItem(columnId: string, title: string) {
+        const newItem: IColumnItem = {
+            id: new Date().toString(),
+            title,
+            description: ''
+        }
+
+        console.log({ newItem })
+
+        setColumns(prev => {
+            if (!prev) {
+                return prev
+            }
+            const newColumns = prev?.map(col => {
+                if (col.id === columnId) {
+                    const newList = [...col.items, newItem]
+                    return {
+                        ...col,
+                        items: newList
+                    }
+                }
+                return col
+            })
+
+            console.log({ newColumns })
+
+            return newColumns
+        })
+    }
+
+    function handleNewColumn(params: any) {
+        createNewColumn(params.title)
+    }
+
+    function handleNewItem(columnId: string, title: string) {
+        createNewItem(columnId, title)
     }
 }
 
