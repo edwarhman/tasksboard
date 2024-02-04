@@ -10,8 +10,8 @@ export default async function Page({ params }: { params: { id: string } }) {
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-beteen p-3 pt-24 sm:p-24">
-            <header>
+        <main className="flex min-h-screen flex-col items-center justify-beteen p-3">
+            <header className="mb-10">
                 <h1 className='font-bold text-3xl'>{board?.title}</h1>
             </header>
             <Table items={board.columns}>

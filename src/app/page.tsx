@@ -17,7 +17,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-beteen p-3 pt-24 sm:p-24">
+    <main className="flex min-h-screen flex-col items-center justify-beteen p-3 max-w-full">
       <header>
         <h1 className='font-bold text-3xl'>TASKSBOARD</h1>
       </header>
