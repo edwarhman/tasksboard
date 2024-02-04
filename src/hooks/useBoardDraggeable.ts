@@ -23,7 +23,6 @@ export default function useBoardDraggeable(lists: IColumn[]) {
 
     function findItemById(id: string): ItemId | undefined {
         const column = findColumnByItemId(id)
-        console.log({ column })
         if (!column)
             return
         const item = column?.items.find((item) => item.id === id)
@@ -53,44 +52,75 @@ export default function useBoardDraggeable(lists: IColumn[]) {
         }
         const { id: overId } = over
 
+        const overColumn = findColumnById(overId)
         const activeColumn = findColumnByItemId(active.id)
-        const overColumn = findColumnByItemId(over.id)
+        const overParentColumn = findColumnByItemId(over.id)
         const activeItem = findItemById(id)
+
+        if (overColumn && overColumn.items.length === 0) {
+            if (!activeItem || !activeColumn) {
+                return
+            }
+            setColumns((prev) => {
+                if (!prev) {
+                    return prev
+                }
+
+                const newColumns = prev?.map((col) => {
+                    if (col.id === activeColumn.id) {
+                        const newActiveColumnItems = col.items.filter(item => item.id !== id)
+                        return {
+                            ...col,
+                            items: newActiveColumnItems
+                        }
+                    }
+
+                    if (col.id === overId) {
+                        const newItems = [activeItem.item]
+
+                        return {
+                            ...col,
+                            items: newItems
+                        }
+                    }
+                    return col
+                })
+
+                console.log({ newColumns })
+
+                return newColumns
+            })
+        }
 
         if (
             !activeItem ||
             !activeColumn ||
-            !overColumn ||
-            activeColumn.id === overColumn.id
+            !overParentColumn ||
+            activeColumn.id === overParentColumn.id
         ) {
             return
         }
 
-        console.log({ over })
 
-        console.log('its different')
         let newItemIdx = 0
 
-        if (overColumn) {
+        if (overParentColumn) {
             const overItem = findItemById(overId)
             if (!overItem) {
                 return
             }
-            newItemIdx = overColumn.items.indexOf(overItem.item) + 1
+            newItemIdx = overParentColumn.items.indexOf(overItem.item) + 1
 
         } else {
             newItemIdx = 0
         }
 
-        console.log({ newItemIdx })
-
         setColumns((prevColumns) => {
             if (!prevColumns) {
                 return prevColumns
             }
-            console.log({ prevColumns })
             const newTable = prevColumns.map((prevCol, prevColIdx) => {
-                if (prevCol.id === overColumn.id) {
+                if (prevCol.id === overParentColumn.id) {
                     let newOverColumnItems
 
                     if (newItemIdx !== 0) {
@@ -106,8 +136,6 @@ export default function useBoardDraggeable(lists: IColumn[]) {
                             ...prevCol.items
                         ]
                     }
-
-                    console.log({ newOverColumnItems })
 
                     return {
                         ...prevCol,
@@ -125,7 +153,6 @@ export default function useBoardDraggeable(lists: IColumn[]) {
 
                 return prevCol
             })
-            console.log({ newTable })
             return newTable
         })
 
@@ -211,8 +238,6 @@ export default function useBoardDraggeable(lists: IColumn[]) {
             description: ''
         }
 
-        console.log({ newItem })
-
         setColumns(prev => {
             if (!prev) {
                 return prev
@@ -228,7 +253,6 @@ export default function useBoardDraggeable(lists: IColumn[]) {
                 return col
             })
 
-            console.log({ newColumns })
 
             return newColumns
         })
